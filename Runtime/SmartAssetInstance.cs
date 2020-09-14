@@ -9,10 +9,10 @@ namespace SAP.Creator.SmartAsset
 
         public class UpdateEventArgs : System.EventArgs
         {
-            public readonly string masterData;
+            public readonly string MasterData;
             public UpdateEventArgs(string masterData)
             {
-                this.masterData = masterData;
+                this.MasterData = masterData;
             }
         }
 
@@ -29,7 +29,8 @@ namespace SAP.Creator.SmartAsset
 
         private string masterData;
 
-        public void UpdateMasterData(string masterData) {
+        public void UpdateMasterData(string masterData)
+        {
             this.masterData = masterData;
             Updated.Invoke(this, new UpdateEventArgs(masterData));
         }
