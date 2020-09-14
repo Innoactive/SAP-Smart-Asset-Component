@@ -27,7 +27,7 @@ namespace SAP.Creator.SmartAsset.Templates
             get { return activeState; }
             protected set
             {
-                if (!EqualityComparer<T>.Default.Equals(activeState, value))
+                if (EqualityComparer<T>.Default.Equals(activeState, value) == false)
                 {
                     if (stateTransitions.ContainsKey(activeState))
                     {

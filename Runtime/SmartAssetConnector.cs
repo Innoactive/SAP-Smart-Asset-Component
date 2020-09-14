@@ -158,6 +158,7 @@ namespace SAP.Creator.SmartAsset
                 onSuccess();
                 return;
             }
+
             Dictionary<string, string> formData = new Dictionary<string, string>();
             formData["grant_type"] = GrantType;
             formData["client_id"] = ClientId;
@@ -168,8 +169,8 @@ namespace SAP.Creator.SmartAsset
             {
                 if (www.isNetworkError || www.isHttpError)
                 {
-                    Debug.Log(www.downloadHandler.text);
-                    Debug.Log(www.error);
+                    Debug.LogError(www.downloadHandler.text);
+                    Debug.LogError(www.error);
                 }
                 else
                 {
@@ -185,7 +186,7 @@ namespace SAP.Creator.SmartAsset
         private void DownloadJson(string url, Action<string> onSuccess)
         {
             UnityWebRequest request = UnityWebRequest.Get(url);
-            Debug.Log(url);
+
             request.SetRequestHeader("Authorization", "Bearer " + AccessToken);
             request.SetRequestHeader("Content-Type", "application/json");
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -197,7 +198,7 @@ namespace SAP.Creator.SmartAsset
                 }
                 else
                 {
-                    Debug.Log(request.error);
+                    Debug.LogError(request.error);
                 }
             };
         }
@@ -222,7 +223,7 @@ namespace SAP.Creator.SmartAsset
                 }
                 else
                 {
-                    Debug.Log(request.error);
+                    Debug.LogError(request.error);
                 }
             };
         }
