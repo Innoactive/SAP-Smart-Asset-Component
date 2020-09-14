@@ -164,7 +164,7 @@ namespace SAP.Creator.SmartAsset.Editor
 
             for (int i = 0; i < configuration.SceneTypes.Count; i++)
             {
-                if (configuration.SceneTypes[i].id == sceneType.Id)
+                if (configuration.SceneTypes[i].Id == sceneType.Id)
                 {
                     sceneTypeReference = configuration.SceneTypes[i];
                     break;
@@ -174,9 +174,9 @@ namespace SAP.Creator.SmartAsset.Editor
             if (sceneTypeReference == null)
             {
                 sceneTypeReference = new SceneTypeReference();
-                sceneTypeReference.id = sceneType.Id;
-                sceneTypeReference.name = sceneType.Name;
-                sceneTypeReference.smartAssetInstances = new List<SmartAssetInstance>();
+                sceneTypeReference.Id = sceneType.Id;
+                sceneTypeReference.Name = sceneType.Name;
+                sceneTypeReference.SmartAssetInstances = new List<SmartAssetInstance>();
                 configuration.SceneTypes.Add(sceneTypeReference);
             }
 
@@ -228,7 +228,7 @@ namespace SAP.Creator.SmartAsset.Editor
                         }
                         smartAssetInstance.Id = smartAssetUsage.Id;
                         smartAssetInstance.name = smartAssetUsage.InstanceName;
-                        sceneTypeReference.smartAssetInstances.Add(smartAssetInstance);
+                        sceneTypeReference.SmartAssetInstances.Add(smartAssetInstance);
 
                         ImportSmartAssetUsage(sceneTypeReference, smartAssetVersionUsages, index + 1);
                     });

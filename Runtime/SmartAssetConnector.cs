@@ -98,10 +98,10 @@ namespace SAP.Creator.SmartAsset
         {
             foreach (SceneTypeReference sceneType in SceneTypes)
             {
-                DownloadJson(Url + "/vr-client/SceneType(" + sceneType.id + ")?$expand=SmartAssetVersionUsages($expand=SmartAssetVersion)", (json) =>
+                DownloadJson(Url + "/vr-client/SceneType(" + sceneType.Id + ")?$expand=SmartAssetVersionUsages($expand=SmartAssetVersion)", (json) =>
                 {
                     SmartAssetVersionUsage[] smartAssetVersionUsages = SceneType.CreateFromJSON(json).SmartAssetVersionUsages;
-                    UpdateSmartAssetInstance(sceneType.smartAssetInstances, smartAssetVersionUsages);
+                    UpdateSmartAssetInstance(sceneType.SmartAssetInstances, smartAssetVersionUsages);
                 });
             }
         }

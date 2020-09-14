@@ -11,13 +11,13 @@ namespace SAP.Creator.SmartAsset
     public class SceneTypeReference
     {
         [SerializeField]
-        public string name;
+        public string Name;
 
         [SerializeField]
-        public string id;
+        public string Id;
 
         [SerializeField]
-        public List<SmartAssetInstance> smartAssetInstances;
+        public List<SmartAssetInstance> SmartAssetInstances;
 
         /// <summary>
         /// Check wether a Smart Asset Instance exists in this context.
@@ -32,7 +32,7 @@ namespace SAP.Creator.SmartAsset
         /// </summary>
         public SmartAssetInstance GetInstance(string id)
         {
-            foreach(SmartAssetInstance instance in smartAssetInstances)
+            foreach(SmartAssetInstance instance in SmartAssetInstances)
             {
                 if (instance != null && instance.Id == id)
                 {
@@ -48,7 +48,7 @@ namespace SAP.Creator.SmartAsset
         /// </summary>
         public void RemoveInstance(string id)
         {
-            smartAssetInstances.Remove(GetInstance(id));
+            SmartAssetInstances.Remove(GetInstance(id));
         }
     }
 }
