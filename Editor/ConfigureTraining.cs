@@ -134,7 +134,6 @@ namespace SAP.Creator.SmartAsset.Editor {
                     Debug.Log(request.error);
                 }
             };
-            
         }
 
         /// <summary>
