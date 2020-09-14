@@ -234,8 +234,6 @@ namespace SAP.Creator.SmartAsset.Editor {
                         ImportSmartAssetUsage(sceneTypeReference, smartAssetVersionUsages, index + 1);
                     });
                 });
-
-
             });
         }
 
