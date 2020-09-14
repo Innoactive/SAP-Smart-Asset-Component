@@ -131,7 +131,7 @@ namespace SAP.Creator.SmartAsset
                         new WaitForSeconds(1);
                     }
 
-                    if (smartAssetVersionUsage.SapId != "")
+                    if (smartAssetVersionUsage.SapId != null && smartAssetVersionUsage.SapId != "")
                     {
                         smartAssetInstance.UpdateMasterData(smartAssetVersionUsage.SapId);
                     }
