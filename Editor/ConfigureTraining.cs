@@ -10,12 +10,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static SAP.Creator.SmartAsset.SmartAssetConnector;
 
-namespace SAP.Creator.SmartAsset.Editor {
+namespace SAP.Creator.SmartAsset.Editor
+{
     /// <summary>
     /// Allows configurating the credentials for integrating the contents from
     /// XR Cloud. 
     /// </summary>
-    public class ConfigureTraining : EditorWindow {
+    public class ConfigureTraining : EditorWindow
+    {
 
         private string accessTokenUrl = "";
         private string grantType = "";
@@ -160,11 +162,11 @@ namespace SAP.Creator.SmartAsset.Editor {
         {
             SceneTypeReference sceneTypeReference = null;
 
-            for (int i = 0; i < configuration.sceneTypes.Count; i++)
+            for (int i = 0; i < configuration.SceneTypes.Count; i++)
             {
-                if (configuration.sceneTypes[i].id == sceneType.Id)
+                if (configuration.SceneTypes[i].id == sceneType.Id)
                 {
-                    sceneTypeReference = configuration.sceneTypes[i];
+                    sceneTypeReference = configuration.SceneTypes[i];
                     break;
                 }
             }
@@ -175,7 +177,7 @@ namespace SAP.Creator.SmartAsset.Editor {
                 sceneTypeReference.id = sceneType.Id;
                 sceneTypeReference.name = sceneType.Name;
                 sceneTypeReference.smartAssetInstances = new List<SmartAssetInstance>();
-                configuration.sceneTypes.Add(sceneTypeReference);
+                configuration.SceneTypes.Add(sceneTypeReference);
             }
 
             DownloadJson(configuration.Url + "/vr-client/SceneType(" + sceneType.Id + ")?$expand=SmartAssetVersionUsages($expand=SmartAssetVersion($expand=Binaries))", accessToken, (json) =>
@@ -192,9 +194,6 @@ namespace SAP.Creator.SmartAsset.Editor {
         /// the import process needs to be step by step. That's why the index 
         /// variable is needed for
         /// </summary>
-        /// <param name="sceneTypeReference"></param>
-        /// <param name="smartAssetVersionUsages"></param>
-        /// <param name="index"></param>
         private void ImportSmartAssetUsage(SceneTypeReference sceneTypeReference, SmartAssetVersionUsage[] smartAssetVersionUsages, int index)
         {
             if (index == smartAssetVersionUsages.Length)
@@ -242,7 +241,6 @@ namespace SAP.Creator.SmartAsset.Editor {
         /// </summary>
         private void DownloadPackage(SmartAssetVersionUsage smartAssetUsage, Action<string> onSuccess)
         {
-
             string packageName = smartAssetUsage.SmartAssetVersion.Binaries[0].Binary_Id + ".unitypackage";
             string packagePath = Application.dataPath+basePath + "/Packages/" + packageName;
 
@@ -255,12 +253,10 @@ namespace SAP.Creator.SmartAsset.Editor {
 
                 WebClient client = new WebClient();
                 client.Headers.Set("Authorization", "Bearer " + accessToken);
-                client.DownloadFile(new Uri(assetDownloadurl), packagePath);
-                
+                client.DownloadFile(new Uri(assetDownloadurl), packagePath); 
             }
             onSuccess(packageName);
         }
-
 
         /// <summary>
         /// Imports a specified package.
@@ -284,7 +280,6 @@ namespace SAP.Creator.SmartAsset.Editor {
                 return;
             }
 
-            
             // Strange workout for some synchronizing issues.
             action = (packageImported) =>
             {
@@ -293,8 +288,6 @@ namespace SAP.Creator.SmartAsset.Editor {
             };
             AssetDatabase.importPackageCompleted += action;
             AssetDatabase.ImportPackage(packagePath, true);
-            //AssetDatabase.Refresh();
-
         }
 
         /// <summary>
@@ -340,7 +333,6 @@ namespace SAP.Creator.SmartAsset.Editor {
 
             while((tarEntry = tarStream.GetNextEntry()) != null)
             {
-
                 if (!tarEntry.Name.EndsWith("pathname"))
                 {
                     continue;

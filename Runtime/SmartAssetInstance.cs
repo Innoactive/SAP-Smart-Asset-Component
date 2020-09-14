@@ -16,6 +16,8 @@ namespace SAP.Creator.SmartAsset
             }
         }
 
+        public event EventHandler<UpdateEventArgs> Updated;
+
         [SerializeField]
         public string Id = "";
 
@@ -27,7 +29,6 @@ namespace SAP.Creator.SmartAsset
 
         private string masterData;
 
-        public event EventHandler<UpdateEventArgs> Updated;
         public void UpdateMasterData(string masterData) {
             this.masterData = masterData;
             Updated.Invoke(this, new UpdateEventArgs(masterData));

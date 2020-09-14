@@ -14,8 +14,6 @@ namespace SAP.Creator.SmartAsset.Templates
         public Action Exit;
     }
 
-
-
     /// <summary>
     /// Class for managing states ans state-transitions in Monobehaviours.
     /// </summary>
@@ -31,9 +29,17 @@ namespace SAP.Creator.SmartAsset.Templates
             {
                 if (!EqualityComparer<T>.Default.Equals(activeState, value))
                 {
-                    if (stateTransitions.ContainsKey(activeState)) stateTransitions[activeState].Exit?.Invoke();
+                    if (stateTransitions.ContainsKey(activeState))
+                    {
+                        stateTransitions[activeState].Exit?.Invoke();
+                    }
+
                     activeState = value;
-                    if (stateTransitions.ContainsKey(activeState)) stateTransitions[activeState].Init?.Invoke();
+
+                    if (stateTransitions.ContainsKey(activeState))
+                    {
+                        stateTransitions[activeState].Init?.Invoke();
+                    }
                 }
             }
         }

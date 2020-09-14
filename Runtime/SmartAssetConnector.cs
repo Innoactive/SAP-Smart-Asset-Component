@@ -11,7 +11,6 @@ namespace SAP.Creator.SmartAsset
     /// </summary>
     public class SmartAssetConnector : MonoBehaviour
     {
-
         [Serializable]
         public class SceneTypeList
         {
@@ -83,7 +82,7 @@ namespace SAP.Creator.SmartAsset
 
         public string Url = "";
 
-        public List<SceneTypeReference> sceneTypes = new List<SceneTypeReference>();
+        public List<SceneTypeReference> SceneTypes = new List<SceneTypeReference>();
 
         private void Start()
         {
@@ -97,7 +96,7 @@ namespace SAP.Creator.SmartAsset
         /// </summary>
         private void UpdateScene()
         {
-            foreach (SceneTypeReference sceneType in sceneTypes)
+            foreach (SceneTypeReference sceneType in SceneTypes)
             {
                 DownloadJson(Url + "/vr-client/SceneType(" + sceneType.id + ")?$expand=SmartAssetVersionUsages($expand=SmartAssetVersion)", (json) =>
                 {
@@ -137,7 +136,6 @@ namespace SAP.Creator.SmartAsset
                         smartAssetInstance.UpdateMasterData(smartAssetVersionUsage.SapId);
                     }
                     break;
-
                 }
             }
         }
@@ -155,7 +153,7 @@ namespace SAP.Creator.SmartAsset
         /// </summary>
         public void InitializeAccessToken(Action onSuccess)
         {
-            if(AccessToken != "")
+            if (AccessToken != "")
             {
                 onSuccess();
                 return;
@@ -179,8 +177,6 @@ namespace SAP.Creator.SmartAsset
                     onSuccess();
                 }
             };
-
-
         }
 
         /// <summary>
@@ -214,7 +210,6 @@ namespace SAP.Creator.SmartAsset
             UnityWebRequest request = UnityWebRequest.Get(url);
 
             request.SetRequestHeader("Authorization", "Bearer " + AccessToken);
-            //request.SetRequestHeader("Content-Type", "application/json");
             DownloadHandlerTexture downloadHandler = new DownloadHandlerTexture(true);
             request.downloadHandler = downloadHandler;
 

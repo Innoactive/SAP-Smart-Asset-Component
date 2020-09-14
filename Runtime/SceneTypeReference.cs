@@ -1,11 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SAP.Creator.SmartAsset
 {
-
     /// <summary>
     /// The reference to a specific Scene-Type.
     /// </summary>
@@ -48,11 +46,9 @@ namespace SAP.Creator.SmartAsset
         /// <summary>
         /// Remove a Smart Asset Instance from this scene.
         /// </summary>
-        /// <param name="id"></param>
         public void RemoveInstance(string id)
         {
             smartAssetInstances.Remove(GetInstance(id));
         }
     }
-
 }
