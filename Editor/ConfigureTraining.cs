@@ -36,8 +36,6 @@ namespace SAP.Creator.SmartAsset.Editor {
         private SmartAssetConnector configuration;
 
         private AssetDatabase.ImportPackageCallback action;
-
-
         [MenuItem("SAP/Creator/Configure Training")]
         private static void ConfigureTrainingWindow()
         {
