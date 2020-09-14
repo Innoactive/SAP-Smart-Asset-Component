@@ -93,7 +93,6 @@ namespace SAP.Creator.SmartAsset.Editor {
                 });
             }
 
-            
             if(connectionTested)
             {
 
