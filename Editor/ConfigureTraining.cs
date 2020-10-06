@@ -241,14 +241,14 @@ namespace SAP.Creator.SmartAsset.Editor
         /// </summary>
         private void DownloadPackage(SmartAssetVersionUsage smartAssetUsage, Action<string> onSuccess)
         {
-            string packageName = smartAssetUsage.SmartAssetVersion.Binaries[0].Binary_Id + ".unitypackage";
+            string packageName = smartAssetUsage.SmartAssetVersion.Package_Id + ".unitypackage";
             string packagePath = Application.dataPath+basePath + "/Packages/" + packageName;
 
             Debug.LogFormat("{0}", packagePath);
 
-            if (smartAssetUsage.SmartAssetVersion.Binaries[0].Binary_Id != "" && !File.Exists(packagePath))
+            if (smartAssetUsage.SmartAssetVersion.Package_Id != "" && !File.Exists(packagePath))
             {
-                string assetDownloadurl = $"{configuration.Url}/v2/smart-assets/SmartAssetVersionBinary(guid'{smartAssetUsage.SmartAssetVersion.Binaries[0].Binary_Id}')/Data";
+                string assetDownloadurl = $"{configuration.Url}/v2/smart-assets/SmartAssetVersionPackage(guid'{smartAssetUsage.SmartAssetVersion.Package_Id}')/Data";
                 Debug.LogFormat("Download from {0}", assetDownloadurl);
 
                 WebClient client = new WebClient();

@@ -32,7 +32,11 @@ namespace SAP.Creator.SmartAsset
         public void UpdateMasterData(string masterData)
         {
             this.masterData = masterData;
-            Updated.Invoke(this, new UpdateEventArgs(masterData));
+            if (Updated != null)
+            {
+                Updated.Invoke(this, new UpdateEventArgs(masterData));
+
+            }
         }
 
         public string GetMasterData()

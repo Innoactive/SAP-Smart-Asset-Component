@@ -52,6 +52,7 @@ namespace SAP.Creator.SmartAsset
         {
             public string createdAt;
             public string Version;
+            public string Package_Id;
             public SmartAssetVersionBinary[] Binaries;
         }
 
