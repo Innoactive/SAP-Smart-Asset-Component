@@ -1,6 +1,6 @@
 # SAP Smart Asset Component
 
-This [Innoactive Creator](https://github.com/Innoactive/Creator) component contains the integration to the Smart Asset Cloud.
+This [Innoactive Creator](https://github.com/Innoactive/Creator) component contains the integration to the Extended Reality Cloud (XR Cloud).
 
 ### Usage
 
