@@ -95,7 +95,7 @@ namespace SAP.Creator.SmartAsset.Editor
                 });
             }
 
-            if(connectionTested)
+            if(connectionTested && sceneTypeOptions != null)
             {
 
                 EditorGUI.BeginChangeCheck();
@@ -103,14 +103,14 @@ namespace SAP.Creator.SmartAsset.Editor
 
                 if (EditorGUI.EndChangeCheck())
                 {
-                    Debug.Log(sceneTypeOptions[sceneTypeIndex]);
+                    Debug.LogFormat("Smart Asset Component: Selected Scene-Type: {0}", sceneTypeOptions[sceneTypeIndex]);
                 }
 
                 configuration.UpdateAccessToken();
 
                 if (GUILayout.Button("Import Smart Assets into Project"))
                 {
-                    Debug.Log("Add GameObjects into Scene");
+                    Debug.Log("Smart Asset Component: Add GameObjects into Scene");
                     ImportSceneType(sceneTypes[sceneTypeIndex]);
                 }
             }
@@ -182,7 +182,7 @@ namespace SAP.Creator.SmartAsset.Editor
 
             DownloadJson(configuration.Url + "/vr-client/SceneType(" + sceneType.Id + ")?$expand=SmartAssetVersionUsages($expand=SmartAssetVersion($expand=Binaries))", accessToken, (json) =>
             {
-                Debug.Log("Update SceneTypeInstances");
+                Debug.Log("Smart Asset Component: Update SceneTypeInstances");
                 SmartAssetVersionUsage[] smartAssetVersionUsages = SceneType.CreateFromJSON(json).SmartAssetVersionUsages;
                 ImportSmartAssetUsage(sceneTypeReference, smartAssetVersionUsages, 0);
             });
@@ -198,27 +198,27 @@ namespace SAP.Creator.SmartAsset.Editor
         {
             if (index == smartAssetVersionUsages.Length)
             {
-                Debug.Log("Import Finished");
+                Debug.Log("Smart Asset Component: Import Finished");
                 return;
             }
             SmartAssetVersionUsage smartAssetUsage = smartAssetVersionUsages[index];
             if (sceneTypeReference.HasInstance(smartAssetUsage.Id))
             {
-                Debug.Log("Instance already existing, so skipping");
+                Debug.Log("Smart Asset Component: Instance already existing, so skipping");
                 ImportSmartAssetUsage(sceneTypeReference, smartAssetVersionUsages, index + 1);
                 return;
             }
 
-            Debug.LogFormat("Download {0}", smartAssetUsage.Id);
+            Debug.LogFormat("Smart Asset Component: Download {0}", smartAssetUsage.Id);
             DownloadPackage(smartAssetUsage, (packageName) =>
             {
-                Debug.LogFormat("Import {0}", packageName);
+                Debug.LogFormat("Smart Asset Component: Import {0}", packageName);
                 ImportPackage(packageName, () =>
                 {
-                    Debug.LogFormat("Instantiate {0}", packageName);
+                    Debug.LogFormat("Smart Asset Component: Instantiate {0}", packageName);
                     InstantiatePrefab(packageName, (gameObject) =>
                     {
-                        Debug.Log("Instantiate GameObject successfull");
+                        Debug.LogFormat("Smart Asset Component: Instantiate GameObject {0} successfull", smartAssetUsage.InstanceName);
 
                         gameObject.name = smartAssetUsage.InstanceName;
                         SmartAssetInstance smartAssetInstance = gameObject.GetComponent<SmartAssetInstance>();
@@ -227,7 +227,8 @@ namespace SAP.Creator.SmartAsset.Editor
                             smartAssetInstance = gameObject.AddComponent<SmartAssetInstance>();
                         }
                         smartAssetInstance.Id = smartAssetUsage.Id;
-                        smartAssetInstance.name = smartAssetUsage.InstanceName;
+                        smartAssetInstance.Name = smartAssetUsage.InstanceName;
+                        smartAssetInstance.Version = smartAssetUsage.SmartAssetVersion.Version;
                         sceneTypeReference.SmartAssetInstances.Add(smartAssetInstance);
 
                         ImportSmartAssetUsage(sceneTypeReference, smartAssetVersionUsages, index + 1);
@@ -244,12 +245,12 @@ namespace SAP.Creator.SmartAsset.Editor
             string packageName = smartAssetUsage.SmartAssetVersion.Package_Id + ".unitypackage";
             string packagePath = Application.dataPath+basePath + "/Packages/" + packageName;
 
-            Debug.LogFormat("{0}", packagePath);
+            Debug.LogFormat("Smart Asset Component: Downloaded package path: {0}", packagePath);
 
             if (smartAssetUsage.SmartAssetVersion.Package_Id != "" && !File.Exists(packagePath))
             {
                 string assetDownloadurl = $"{configuration.Url}/v2/smart-assets/SmartAssetVersionPackage(guid'{smartAssetUsage.SmartAssetVersion.Package_Id}')/Data";
-                Debug.LogFormat("Download from {0}", assetDownloadurl);
+                Debug.LogFormat("Smart Asset Component: Download from {0}", assetDownloadurl);
 
                 WebClient client = new WebClient();
                 client.Headers.Set("Authorization", "Bearer " + accessToken);
@@ -298,19 +299,19 @@ namespace SAP.Creator.SmartAsset.Editor
             String[] prefabNames = GetPrefabNames(packageName);
             if (prefabNames.Length == 0)
             {
-                Debug.Log("No prefabs found in package. Abort import.");
+                Debug.Log("Smart Asset Component: No prefabs found in package. Abort import.");
                 return;
             }
 
             if (prefabNames.Length > 1)
             {
-                Debug.Log("More than 1 prefab per Package is currently not supported, so skipping.");
+                Debug.Log("Smart Asset Component: More than 1 prefab per Package is currently not supported, so skipping.");
                 return;
             }
 
             foreach (String prefabName in prefabNames)
             {
-                Debug.LogFormat("Instantiate GameObject {0}", prefabName);
+                Debug.LogFormat("Smart Asset Component: Instantiate GameObject {0}", prefabName);
                 GameObject gameObject = PrefabUtility.InstantiatePrefab(Resources.Load("Prefabs/" + prefabName)) as GameObject;
                 onSuccess(gameObject);
                 break;

@@ -21,6 +21,12 @@ namespace SAP.Creator.SmartAsset
         [SerializeField]
         public string Id = "";
 
+        [SerializeField]
+        public string Name = "";
+
+        [SerializeField]
+        public string Version = "";
+
         [NonSerialized]
         public string Title = "";
 
