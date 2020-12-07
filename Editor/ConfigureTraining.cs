@@ -242,8 +242,14 @@ namespace SAP.Creator.SmartAsset.Editor
         /// </summary>
         private void DownloadPackage(SmartAssetVersionUsage smartAssetUsage, Action<string> onSuccess)
         {
+            string packageDirectory = Application.dataPath + basePath + "/Packages/";
             string packageName = smartAssetUsage.SmartAssetVersion.Package_Id + ".unitypackage";
-            string packagePath = Application.dataPath+basePath + "/Packages/" + packageName;
+            string packagePath = packageDirectory + packageName;
+
+            if (!Directory.Exists(packageDirectory))
+            {
+                Directory.CreateDirectory(packageDirectory);
+            }
 
             Debug.LogFormat("Smart Asset Component: Downloaded package path: {0}", packagePath);
 
